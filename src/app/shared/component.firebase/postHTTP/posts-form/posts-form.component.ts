@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Iposts } from '../../models/posts';
 import { PostsService } from '../../service/posts.service';
+import { SnackbarService } from '../../service/snackbar.service';
 
 @Component({
   selector: 'app-posts-form',
@@ -18,7 +19,8 @@ export class PostsFormComponent implements OnInit {
   userIdArr : Array<number> = [1,2,3,4,5,6,7,8,9,10]
 
   constructor(
-    private _postService : PostsService
+    private _postService : PostsService,
+    private _snackBar : SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -88,7 +90,8 @@ export class PostsFormComponent implements OnInit {
             this._postService.setUpdatePosts(data)
           },
           error : err => {
-            console.log(err)
+            // console.log(err)
+            this._snackBar.error(`Unable to update the card!!!`)
           }
         })
     }

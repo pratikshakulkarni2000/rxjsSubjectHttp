@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../../service/posts.service';
 import { Iposts } from '../../models/posts';
+import { SnackbarService } from '../../service/snackbar.service';
 
 @Component({
   selector: 'app-posts-dashboard',
@@ -12,7 +13,8 @@ export class PostsDashboardComponent implements OnInit {
   postsArr : Array<Iposts> = []
 
   constructor(
-    private _postService : PostsService
+    private _postService : PostsService,
+    private _snackbar : SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +28,7 @@ export class PostsDashboardComponent implements OnInit {
   onAdd(){
      this._postService.newPostSubObs$.subscribe(data => {
       this.postsArr.unshift(data)
+      this._snackbar.opensnackbar(`Card is added successfully !!!`)
     })
   }
 
@@ -33,6 +36,7 @@ export class PostsDashboardComponent implements OnInit {
       this._postService.removeSubObs$.subscribe(id => {
       let getIndex = this.postsArr.findIndex(r => r.id === id)
       this.postsArr.splice(getIndex,1)
+      this._snackbar.opensnackbar(`Card is removed successfully !!!`)
     })
   }
 
@@ -40,6 +44,7 @@ export class PostsDashboardComponent implements OnInit {
       this._postService.updatePostObs$.subscribe(post => {
       let getIndex = this.postsArr.findIndex(u => u.id === post.id)
       this.postsArr[getIndex] = post
+      this._snackbar.opensnackbar(`Card is updated successfully !!!`)
     })
   }
 
@@ -51,7 +56,8 @@ export class PostsDashboardComponent implements OnInit {
           this.postsArr = data        
         },
         error : err => {
-          console.log(err);
+          // console.log(err);
+          this._snackbar.error(`Unable to fetch data`)
         }
       })
   }

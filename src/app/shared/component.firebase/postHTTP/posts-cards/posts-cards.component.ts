@@ -4,6 +4,7 @@ import { PostsService } from '../../service/posts.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GetConfirmComponent } from '../get-confirm/get-confirm.component';
 import { filter, switchMap } from 'rxjs';
+import { SnackbarService } from '../../service/snackbar.service';
 
 @Component({
   selector: 'app-posts-cards',
@@ -16,7 +17,8 @@ export class PostsCardsComponent implements OnInit {
 
   constructor(
     private _postsService : PostsService,
-    private _dialog : MatDialog
+    private _dialog : MatDialog,
+    private _snackbar : SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -72,7 +74,8 @@ export class PostsCardsComponent implements OnInit {
           this._postsService.setRemovePost(this.postObj.id)       
         },
         error : err => {
-          console.log(err);          
+          // console.log(err); 
+          this._snackbar.error(`The given card is unable to remove !!!`)
         }
       })
   }
