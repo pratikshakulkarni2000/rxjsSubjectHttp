@@ -1,0 +1,15 @@
+<div class="contianer">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 my-3">
+            <app-posts-form></app-posts-form>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-4" *ngFor="let post of postsArr">
+                <app-posts-cards
+                [postObj]="post"
+                ></app-posts-cards>
+            </div>
+        </div>
+    </div>
+</div>

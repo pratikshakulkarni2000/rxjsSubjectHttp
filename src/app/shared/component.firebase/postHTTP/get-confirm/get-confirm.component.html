@@ -1,0 +1,12 @@
+
+<p [innerHTML]="getMsg" *ngIf="getMsg; else noMsg"></p>
+<ng-template #noMsg>
+    <p>
+        Are you sure to remove it??
+    </p>
+</ng-template>
+
+<div class="d-flex justify-content-between">
+    <button mat-raised-button color="primary" (click)="onClose(true)">Yes</button>
+    <button mat-raised-button color="warn" (click)="onClose(false)">No</button>
+</div>
